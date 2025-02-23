@@ -12,7 +12,7 @@ export default function App() {
   const Tab = createBottomTabNavigator()
 
   const LOCATIONS = 'Locations'
-  const ADDING = 'Adding'
+  const ADDING = 'Adding Location'
   const MAP = 'Map'
 
   return (
