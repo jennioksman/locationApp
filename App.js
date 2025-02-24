@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Text } from 'react-native-paper'
 import { Locations, AddingLocation, MapView } from './components/components'
 import { Icon } from 'react-native-paper'
+import { DataProvider } from './contexts/context'
 
 
 export default function App() {
@@ -16,27 +17,29 @@ export default function App() {
   const MAP = 'Map'
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={{
-        headerTitleAlign: 'center'
-      }}>
-        <Tab.Screen
-          name={LOCATIONS}
-          component={Locations}
-          options={{tabBarIcon: ()=> <Icon source={'map-marker'} size={20}/>}}
-        />
-        <Tab.Screen
-          name={ADDING}
-          component={AddingLocation}
-          options={{tabBarIcon: ()=> <Icon source={'plus-circle'} size={20}/>}}
-        />
-        <Tab.Screen
-          name={MAP}
-          component={MapView}
-          options={{tabBarIcon: ()=> <Icon source={'map'} size={20}/>}}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <DataProvider>
+      <NavigationContainer>
+        <Tab.Navigator screenOptions={{
+          headerTitleAlign: 'center'
+        }}>
+          <Tab.Screen
+            name={LOCATIONS}
+            component={Locations}
+            options={{tabBarIcon: ()=> <Icon source={'map-marker'} size={20}/>}}
+          />
+          <Tab.Screen
+            name={ADDING}
+            component={AddingLocation}
+            options={{tabBarIcon: ()=> <Icon source={'plus-circle'} size={20}/>}}
+          />
+          <Tab.Screen
+            name={MAP}
+            component={MapView}
+            options={{tabBarIcon: ()=> <Icon source={'map'} size={20}/>}}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </DataProvider> 
   )
 }
 
