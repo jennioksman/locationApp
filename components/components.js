@@ -146,6 +146,9 @@ export function MapScreen() {
 }
 
 
+export function Capitals(){
+    <Text variant='headlineMedium'>Capitals will be here</Text>
+}
 
 const styles = StyleSheet.create({
     container: {

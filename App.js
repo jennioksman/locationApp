@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Text } from 'react-native-paper'
-import { Locations, AddingLocation, MapScreen } from './components/components'
+import { Locations, AddingLocation, MapScreen, Capitals } from './components/components'
 import { Icon } from 'react-native-paper'
 import { DataProvider, LocationProvider } from './contexts/context'
 
@@ -15,6 +15,8 @@ export default function App() {
   const LOCATIONS = 'Locations'
   const ADDING = 'Adding Location'
   const MAP = 'Map'
+  const CAPITALS = 'Capitals'
+  
 
   return (
     <DataProvider>
@@ -37,6 +39,11 @@ export default function App() {
               name={MAP}
               component={MapScreen}
               options={{tabBarIcon: ()=> <Icon source={'map'} size={20}/>}}
+            />
+            <Tab.Screen
+              name={CAPITALS}
+              component={Capitals}
+              options={{tabBarIcon: ()=> <Icon source={'city-variant'} size={20}/>}}
             />
           </Tab.Navigator>
         </NavigationContainer>
