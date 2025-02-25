@@ -147,7 +147,38 @@ export function MapScreen() {
 
 
 export function Capitals(){
-    <Text variant='headlineMedium'>Capitals will be here</Text>
+    return(
+        <Text variant='headlineMedium'>Capitals will be here</Text>
+    )
+}
+
+export function Login(){
+    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    return(
+        <View>
+            <TextInput
+                mode='flat'
+                label='email'
+                value={email}
+                onChangeText={setEmail}
+            />
+            <TextInput
+                mode='flat'
+                label='email'
+                value={password}
+                onChangeText={setPassword}
+            />
+            <Button
+                mode="contained"
+                onPress={() => {
+                    
+                }}
+            >Login</Button>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
