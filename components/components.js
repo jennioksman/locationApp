@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar'
-import { useState, useContext } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { useState, useContext, useEffect } from 'react'
+import { StyleSheet, View, ScrollView, Dimensions } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
-import { DataContext } from '../contexts/context'
+import MapView from 'react-native-maps'
+import * as Location from 'expo-location'
+import { DataContext, LocationContext } from '../contexts/context'
+
 
 export function Locations() {
 
@@ -36,8 +39,8 @@ export function Locations() {
 export function AddingLocation() {
 
     const { data, setData } = useContext(DataContext)
+    const {location, setLocation} = useContext(LocationContext)
 
-    const [location, setLocation] = useState('')
     const [description, setDescription] = useState('')
     const [rating, setRating] = useState(0)
 
@@ -88,13 +91,62 @@ export function AddingLocation() {
     )
 }
 
-export function MapView() {
+export function MapScreen() {
+    const { location } = useContext(LocationContext)
 
+    const [latitude, setLatitude] = useState(0)
+    const [longnitude, setLongnitude] = useState(0)
+
+    useEffect(() => {
+        getLocation()
+        async function getLocation() {
+
+            let {status} = await Location.requestForegroundPermissionsAsync()
+            if(status !=='granted'){
+                console.log('No permission')
+                return  
+            }
     
-
+            const place = await Location.geocodeAsync(location)
+            setLatitude(place[0].latitude)
+            setLongnitude(place[0].longitude)   
+        } 
+    },[location]
+)
     return(
-        <View>
-            <Text variant='headlineMedium'>Maps</Text>
+        <View style={styles.container}>
+            <Text variant='headlineSmall'>{latitude}</Text>
+            <Text variant='headlineSmall'>{longnitude}</Text>
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: 65.0800,
+                    longitude: 25.4800,
+                    latitudeDelta: 0.0922,  
+                    longitudeDelta: 0.0421
+                }}
+                region={{
+                    latitude: latitude,
+                    longitude: longnitude,
+                    latitudeDelta: 0.0922,  
+                    longitudeDelta: 0.0421
+                }}
+            />
         </View>
-    )
+)
+    
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    map: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height
+    }
+  })
+  

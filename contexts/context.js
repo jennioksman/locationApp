@@ -15,7 +15,7 @@ export const DataProvider = ({ children }) => {
 export const LocationContext = createContext()
 
 export const LocationProvider = ({ children }) => {
-  const [location, setLocation] = useState([])
+  const [location, setLocation] = useState('')
 
   return (
     <LocationContext.Provider value={{ location, setLocation }}>
