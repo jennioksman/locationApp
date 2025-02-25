@@ -1,16 +1,19 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useContext, useEffect } from 'react'
 import { StyleSheet, View, ScrollView, Dimensions } from 'react-native'
-import { Button, Text, TextInput } from 'react-native-paper'
+import { Button, Text, TextInput, IconButton } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
 import MapView from 'react-native-maps'
 import * as Location from 'expo-location'
 import { DataContext, LocationContext } from '../contexts/context'
+import { useNavigation, NavigationContainer } from '@react-navigation/native'
 
 
 export function Locations() {
 
     const { data } = useContext(DataContext)
+
+    const navigation = useNavigation()
 
     return (
         <View>
@@ -19,10 +22,15 @@ export function Locations() {
                     <View key={index}>
                         <Text variant="bodyLarge">{`Location: ${item.location}`}</Text>
                         <Text variant="bodyLarge">{`Description: ${item.description}`}</Text>
+                        <IconButton
+                            icon="map-marker"
+                            size={40}
+                            onPress={() => navigation.navigate('Map')}
+                        />
                         <Rating
                             type='custom'
                             ratingCount={5}
-                            startingValue={item.rating} 
+                            startingValue={item.rating}
                             readonly
                             starContainerStyle={{
                                 alignSelf: "center",
@@ -39,7 +47,7 @@ export function Locations() {
 export function AddingLocation() {
 
     const { data, setData } = useContext(DataContext)
-    const {location, setLocation} = useContext(LocationContext)
+    const { location, setLocation } = useContext(LocationContext)
 
     const [description, setDescription] = useState('')
     const [rating, setRating] = useState(0)
@@ -101,19 +109,19 @@ export function MapScreen() {
         getLocation()
         async function getLocation() {
 
-            let {status} = await Location.requestForegroundPermissionsAsync()
-            if(status !=='granted'){
+            let { status } = await Location.requestForegroundPermissionsAsync()
+            if (status !== 'granted') {
                 console.log('No permission')
-                return  
+                return
             }
-    
+
             const place = await Location.geocodeAsync(location)
             setLatitude(place[0].latitude)
-            setLongnitude(place[0].longitude)   
-        } 
-    },[location]
-)
-    return(
+            setLongnitude(place[0].longitude)
+        }
+    }, [location]
+    )
+    return (
         <View style={styles.container}>
             <Text variant='headlineSmall'>{latitude}</Text>
             <Text variant='headlineSmall'>{longnitude}</Text>
@@ -122,31 +130,32 @@ export function MapScreen() {
                 initialRegion={{
                     latitude: 65.0800,
                     longitude: 25.4800,
-                    latitudeDelta: 0.0922,  
+                    latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421
                 }}
                 region={{
                     latitude: latitude,
                     longitude: longnitude,
-                    latitudeDelta: 0.0922,  
+                    latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421
                 }}
             />
         </View>
-)
-    
+    )
+
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     map: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height
     }
-  })
-  
+})
