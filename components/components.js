@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useContext, useEffect } from 'react'
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, ScrollView, Dimensions, Image } from 'react-native'
 import { Button, Text, TextInput, IconButton } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
 import MapView from 'react-native-maps'
 import * as Location from 'expo-location'
 import { DataContext, LocationContext } from '../contexts/context'
 import { useNavigation, NavigationContainer } from '@react-navigation/native'
+import axios from 'axios'
 
 
 export function Locations() {
@@ -147,8 +148,40 @@ export function MapScreen() {
 
 
 export function Capitals(){
+
+    const [country, setCountry] = useState('')
+    const [countryName, setCountryName]= useState('')
+    const [capital, setCapital] = useState('')
+    const [flag, setFlag] = useState('')
+
+    function getData(){
+        axios.get(`https://restcountries.com/v3.1/name/${country}`)
+            .then(resp => {
+                const data = resp.data[0] // Hakee ensimmäisen maan tuloksista
+                setCountryName(data.name.common) // Maan nimi (esim. "Finland")
+                setCapital(data.capital[0]) // Pääkaupunki (esim. "Helsinki")
+                setFlag(data.flags.png) // Lipun URL (PNG-muodossa)
+            })
+            .catch(error => console.log(error.message))
+    }
+
     return(
-        <Text variant='headlineMedium'>Capitals will be here</Text>
+        <View>
+            <TextInput
+                mode='flat'
+                label='Search'
+                value={country}
+                onChangeText={setCountry}
+            />
+            <Button
+                mode='contained'
+                onPress={getData}
+            >Search</Button>
+            <Text>{countryName}</Text>
+            <Text>{capital}</Text>
+            <Image source={{ uri: flag }} style={{ width: 100, height: 60 }} />
+        </View>
+
     )
 }
 
