@@ -108,6 +108,7 @@ export function MapScreen() {
 
     useEffect(() => {
         getLocation()
+        console.log(latitude, longnitude);
         async function getLocation() {
 
             let { status } = await Location.requestForegroundPermissionsAsync()
@@ -119,6 +120,8 @@ export function MapScreen() {
             const place = await Location.geocodeAsync(location)
             setLatitude(place[0].latitude)
             setLongnitude(place[0].longitude)
+            
+            
         }
     }, [location]
     )
@@ -147,14 +150,23 @@ export function MapScreen() {
 }
 
 
-export function Capitals(){
+export function Capitals() {
 
+    const [data, setData] = useState([])
     const [country, setCountry] = useState('')
-    const [countryName, setCountryName]= useState('')
+    const [countryName, setCountryName] = useState('')
     const [capital, setCapital] = useState('')
     const [flag, setFlag] = useState('')
 
-    function getData(){
+
+    useEffect(() => {
+        // Lisää uusi maa listaan vasta kun tiedot on päivitetty
+        if (countryName && capital && flag) {
+            setData(prevData => [...prevData, { countryName, capital, flag }])
+        }
+    }, [countryName, capital, flag])
+
+    function getData() {
         axios.get(`https://restcountries.com/v3.1/name/${country}`)
             .then(resp => {
                 const data = resp.data[0] // Hakee ensimmäisen maan tuloksista
@@ -165,7 +177,7 @@ export function Capitals(){
             .catch(error => console.log(error.message))
     }
 
-    return(
+    return (
         <View>
             <TextInput
                 mode='flat'
@@ -177,20 +189,26 @@ export function Capitals(){
                 mode='contained'
                 onPress={getData}
             >Search</Button>
-            <Text>{countryName}</Text>
-            <Text>{capital}</Text>
-            <Image source={{ uri: flag }} style={{ width: 100, height: 60 }} />
+            <ScrollView style={styles.scroll}>
+                {data.map((item, index) => (
+                    <View key={index}>
+                        <Text variant="bodyLarge">{`Country: ${item.countryName}`}</Text>
+                        <Text variant="bodyLarge">{`Capital: ${item.capital}`}</Text>
+                        <Image source={{ uri: item.flag }} style={{ width: 100, height: 60 }} />
+                    </View>))}
+            </ScrollView>
+
         </View>
 
     )
 }
 
-export function Login(){
-    
+export function Login() {
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    return(
+    return (
         <View>
             <TextInput
                 mode='flat'
@@ -207,7 +225,7 @@ export function Login(){
             <Button
                 mode="contained"
                 onPress={() => {
-                    
+
                 }}
             >Login</Button>
         </View>
@@ -224,5 +242,8 @@ const styles = StyleSheet.create({
     map: {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height
+    },
+    scroll: {
+        marginBlockEnd: 40
     }
 })
