@@ -1,5 +1,5 @@
 
-import { addDoc, collection, getDoc, getDocs, onSnapshot, query } from "firebase/firestore"
+import { addDoc, collection, getDocs, onSnapshot, query } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { db, LOCATION_REF } from "./firebaseConfig"
 

@@ -6,7 +6,7 @@ import { Rating } from 'react-native-ratings'
 import MapView from 'react-native-maps'
 import * as Location from 'expo-location'
 import { DataContext, LocationContext } from '../contexts/context'
-import { useNavigation, NavigationContainer } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { addLocation, useFireLocations } from '../firebase/FirebaseController'
 
@@ -154,7 +154,6 @@ export function MapScreen() {
             />
         </View>
     )
-
 }
 
 export function Capitals() {
