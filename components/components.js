@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useContext, useEffect } from 'react'
-import { StyleSheet, View, ScrollView, Dimensions, Image } from 'react-native'
+import { StyleSheet, View, ScrollView, Dimensions, Image, SafeAreaView } from 'react-native'
 import { Button, Text, TextInput, IconButton } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
 import MapView from 'react-native-maps'
@@ -8,25 +8,31 @@ import * as Location from 'expo-location'
 import { DataContext, LocationContext } from '../contexts/context'
 import { useNavigation, NavigationContainer } from '@react-navigation/native'
 import axios from 'axios'
+import { addLocation, useFireLocations } from '../firebase/FirebaseController'
 
 
 export function Locations() {
 
-    const { data } = useContext(DataContext)
+    const { setLocation } = useContext(LocationContext)
 
     const navigation = useNavigation()
+
+    const locations = useFireLocations()
 
     return (
         <View>
             <ScrollView>
-                {data.map((item, index) => (
+                {locations.map((item, index) => (
                     <View key={index}>
                         <Text variant="bodyLarge">{`Location: ${item.location}`}</Text>
                         <Text variant="bodyLarge">{`Description: ${item.description}`}</Text>
                         <IconButton
                             icon="map-marker"
                             size={40}
-                            onPress={() => navigation.navigate('Map')}
+                            onPress={() => {
+                                setLocation(item.location)  
+                                navigation.navigate('Map')  
+                            }}
                         />
                         <Rating
                             type='custom'
@@ -46,6 +52,8 @@ export function Locations() {
 }
 
 export function AddingLocation() {
+
+    const locations = useFireLocations()
 
     const { data, setData } = useContext(DataContext)
     const { location, setLocation } = useContext(LocationContext)
@@ -89,8 +97,9 @@ export function AddingLocation() {
             <Button
                 mode="contained"
                 onPress={() => {
-                    console.log(location, description, rating)
+                    console.log(locations)
                     addToList()
+                    addLocation(location, description, rating)
                     setLocation('')
                     setDescription('')
                     setRating('')
@@ -101,14 +110,14 @@ export function AddingLocation() {
 }
 
 export function MapScreen() {
+
     const { location } = useContext(LocationContext)
 
-    const [latitude, setLatitude] = useState(0)
-    const [longnitude, setLongnitude] = useState(0)
+    const [latitude, setLatitude] = useState(65.0120888)
+    const [longnitude, setLongnitude] = useState(25.465077299999997)
 
     useEffect(() => {
-        getLocation()
-        console.log(latitude, longnitude);
+
         async function getLocation() {
 
             let { status } = await Location.requestForegroundPermissionsAsync()
@@ -116,13 +125,12 @@ export function MapScreen() {
                 console.log('No permission')
                 return
             }
-
             const place = await Location.geocodeAsync(location)
             setLatitude(place[0].latitude)
             setLongnitude(place[0].longitude)
-            
-            
+            console.log(latitude, longnitude);    
         }
+        getLocation()
     }, [location]
     )
     return (
@@ -149,7 +157,6 @@ export function MapScreen() {
 
 }
 
-
 export function Capitals() {
 
     const [data, setData] = useState([])
@@ -157,28 +164,31 @@ export function Capitals() {
     const [countryName, setCountryName] = useState('')
     const [capital, setCapital] = useState('')
     const [flag, setFlag] = useState('')
-
-
     useEffect(() => {
-        // Lisää uusi maa listaan vasta kun tiedot on päivitetty
+        
         if (countryName && capital && flag) {
-            setData(prevData => [...prevData, { countryName, capital, flag }])
+            setData(prevData => {
+                if (!prevData.some(item => item.countryName === countryName)) {
+                    return [...prevData, { countryName, capital, flag }];
+                }
+                return prevData
+            })
         }
     }, [countryName, capital, flag])
 
     function getData() {
         axios.get(`https://restcountries.com/v3.1/name/${country}`)
             .then(resp => {
-                const data = resp.data[0] // Hakee ensimmäisen maan tuloksista
-                setCountryName(data.name.common) // Maan nimi (esim. "Finland")
-                setCapital(data.capital[0]) // Pääkaupunki (esim. "Helsinki")
-                setFlag(data.flags.png) // Lipun URL (PNG-muodossa)
+                const data = resp.data[0] 
+                setCountryName(data.name.common) 
+                setCapital(data.capital[0]) 
+                setFlag(data.flags.png) 
+                setCountry('')
             })
             .catch(error => console.log(error.message))
     }
-
     return (
-        <View>
+        <SafeAreaView style={styles.scroll}>
             <TextInput
                 mode='flat'
                 label='Search'
@@ -189,7 +199,7 @@ export function Capitals() {
                 mode='contained'
                 onPress={getData}
             >Search</Button>
-            <ScrollView style={styles.scroll}>
+            <ScrollView >
                 {data.map((item, index) => (
                     <View key={index}>
                         <Text variant="bodyLarge">{`Country: ${item.countryName}`}</Text>
@@ -197,9 +207,7 @@ export function Capitals() {
                         <Image source={{ uri: item.flag }} style={{ width: 100, height: 60 }} />
                     </View>))}
             </ScrollView>
-
-        </View>
-
+        </SafeAreaView>
     )
 }
 
@@ -244,6 +252,6 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height
     },
     scroll: {
-        marginBlockEnd: 40
+        marginBottom: 100
     }
 })
