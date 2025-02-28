@@ -2,17 +2,36 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Icon } from 'react-native-paper'
+import { Icon, IconButton } from 'react-native-paper'
 import { DataProvider, LocationProvider } from './contexts/context'
 import { Login } from './screens/Login'
 import { Locations } from './screens/Locations'
 import { AddingLocation } from './screens/AddingLocations'
 import { MapScreen } from './screens/MapScreen'
 import { Capitals } from './screens/Capitals'
-import { useFireAuth } from './firebase/FirebaseAuthController'
+import { logoutUser, useFireAuth } from './firebase/FirebaseAuthController'
+import { UserContext } from './contexts/userContext'
+import { useContext } from 'react'
 
 
 export default function App() {
+
+  const user = useFireAuth()
+
+  return (
+    <UserContext.Provider value={user}>
+      <DataProvider>
+        <LocationProvider>
+          <NavigationContainer>
+            {user ? <Navigation /> : <Login />}
+          </NavigationContainer>
+        </LocationProvider>
+      </DataProvider>
+    </UserContext.Provider>
+  )
+}
+
+function Navigation() {
 
   const Tab = createBottomTabNavigator()
 
@@ -20,49 +39,37 @@ export default function App() {
   const ADDING = 'Adding Location'
   const MAP = 'Map'
   const CAPITALS = 'Capitals'
-  const LOGIN = 'Login'
-
-  const user = useFireAuth()
+  const user = useContext(UserContext)
 
   return (
+    <Tab.Navigator screenOptions={{
+      headerTitle: user.email,
+      headerTitleAlign: 'center',
+      headerRight: () => <IconButton icon={'logout'} onPress={logoutUser} />
+    }}>
+      <Tab.Screen
+        name={LOCATIONS}
+        component={Locations}
+        options={{ 
+          tabBarIcon: () => <Icon source={'map-marker'} size={20} /> }}
+      />
+      <Tab.Screen
+        name={ADDING}
+        component={AddingLocation}
+        options={{ tabBarIcon: () => <Icon source={'plus-circle'} size={20} /> }}
+      />
+      <Tab.Screen
+        name={MAP}
+        component={MapScreen}
+        options={{ tabBarIcon: () => <Icon source={'map'} size={20} /> }}
+      />
+      <Tab.Screen
+        name={CAPITALS}
+        component={Capitals}
+        options={{ tabBarIcon: () => <Icon source={'city-variant'} size={20} /> }}
+      />
+    </Tab.Navigator>
 
-    <DataProvider>
-      <LocationProvider>
-        <NavigationContainer>
-          <Tab.Navigator screenOptions={{
-            headerTitleAlign: 'center'
-          }}>
-            { user ? 
-            <Tab.Screen
-            name={LOCATIONS}
-            component={Locations}
-            options={{ tabBarIcon: () => <Icon source={'map-marker'} size={20} /> }}
-          /> :
-             <Tab.Screen
-              name={LOGIN}
-              component={Login}
-              options={{ tabBarIcon: () => <Icon source={'account'} size={20} /> }}
-            /> 
-             }
-            <Tab.Screen
-              name={ADDING}
-              component={AddingLocation}
-              options={{ tabBarIcon: () => <Icon source={'plus-circle'} size={20} /> }}
-            />
-            <Tab.Screen
-              name={MAP}
-              component={MapScreen}
-              options={{ tabBarIcon: () => <Icon source={'map'} size={20} /> }}
-            />
-            <Tab.Screen
-              name={CAPITALS}
-              component={Capitals}
-              options={{ tabBarIcon: () => <Icon source={'city-variant'} size={20} /> }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </LocationProvider>
-    </DataProvider>
   )
 }
 
