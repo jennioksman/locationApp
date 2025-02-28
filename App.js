@@ -2,9 +2,13 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Locations, AddingLocation, MapScreen, Capitals } from './components/components'
 import { Icon } from 'react-native-paper'
 import { DataProvider, LocationProvider } from './contexts/context'
+import { Login } from './screens/Login'
+import { Locations } from './screens/Locations'
+import { AddingLocation } from './screens/AddingLocations'
+import { MapScreen } from './screens/MapScreen'
+import { Capitals } from './screens/Capitals'
 
 
 export default function App() {
