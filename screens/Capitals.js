@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { SafeAreaView, ScrollView } from "react-native"
+import { SafeAreaView, ScrollView, View, Image } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
 import { styles } from "../styles/Styles"
 
@@ -47,7 +47,7 @@ export function Capitals() {
             <Button
                 mode='contained'
                 onPress={getData}
-            >Search</Button>
+                >Search</Button>
             <ScrollView>
                 {data.map((item, index) => (
                     <View key={index}>

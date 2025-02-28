@@ -9,6 +9,7 @@ import { Locations } from './screens/Locations'
 import { AddingLocation } from './screens/AddingLocations'
 import { MapScreen } from './screens/MapScreen'
 import { Capitals } from './screens/Capitals'
+import { useFireAuth } from './firebase/FirebaseAuthController'
 
 
 export default function App() {
@@ -19,6 +20,9 @@ export default function App() {
   const ADDING = 'Adding Location'
   const MAP = 'Map'
   const CAPITALS = 'Capitals'
+  const LOGIN = 'Login'
+
+  const user = useFireAuth()
 
   return (
 
@@ -28,11 +32,18 @@ export default function App() {
           <Tab.Navigator screenOptions={{
             headerTitleAlign: 'center'
           }}>
+            { user ? 
             <Tab.Screen
-              name={LOCATIONS}
-              component={Locations}
-              options={{ tabBarIcon: () => <Icon source={'map-marker'} size={20} /> }}
-            />
+            name={LOCATIONS}
+            component={Locations}
+            options={{ tabBarIcon: () => <Icon source={'map-marker'} size={20} /> }}
+          /> :
+             <Tab.Screen
+              name={LOGIN}
+              component={Login}
+              options={{ tabBarIcon: () => <Icon source={'account'} size={20} /> }}
+            /> 
+             }
             <Tab.Screen
               name={ADDING}
               component={AddingLocation}
