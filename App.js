@@ -12,22 +12,25 @@ import { Capitals } from './screens/Capitals'
 import { logoutUser, useFireAuth } from './firebase/FirebaseAuthController'
 import { UserContext } from './contexts/userContext'
 import { useContext } from 'react'
+import { UserLocationContext } from './contexts/UserLocationsContext'
 
 
 export default function App() {
 
-  const user = useFireAuth()
+  const [user, locations] = useFireAuth()
 
   return (
-    <UserContext.Provider value={user}>
-      <DataProvider>
-        <LocationProvider>
-          <NavigationContainer>
-            {user ? <Navigation /> : <Login />}
-          </NavigationContainer>
-        </LocationProvider>
-      </DataProvider>
-    </UserContext.Provider>
+    <UserLocationContext.Provider value={locations}>
+      <UserContext.Provider value={user}>
+        <DataProvider>
+          <LocationProvider>
+            <NavigationContainer>
+              {user ? <Navigation /> : <Login />}
+            </NavigationContainer>
+          </LocationProvider>
+        </DataProvider>
+      </UserContext.Provider>
+    </UserLocationContext.Provider>
   )
 }
 

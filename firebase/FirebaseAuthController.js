@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { auth, LOCATION_REF, USERS_REF } from "./firebaseConfig";
+import { auth, LOCATION_REF, USERS_REF, db } from "./firebaseConfig";
 import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 

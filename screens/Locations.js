@@ -7,6 +7,7 @@ import { LocationContext } from '../contexts/context'
 import { useNavigation } from '@react-navigation/native'
 import { useFireLocations } from '../firebase/FirebaseController'
 import { styles } from "../styles/Styles"
+import { UserLocationContext } from '../contexts/UserLocationsContext'
 
 export function Locations() {
 
@@ -14,7 +15,7 @@ export function Locations() {
 
     const navigation = useNavigation()
 
-    const locations = useFireLocations()
+    const locations = useContext(UserLocationContext)
 
     return (
         <View>
