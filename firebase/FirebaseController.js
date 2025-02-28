@@ -1,7 +1,7 @@
 
 import { addDoc, collection, getDocs, onSnapshot, query } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { db, LOCATION_REF } from "./firebaseConfig"
+import { auth, db, LOCATION_REF, USERS_REF } from "./firebaseConfig"
 
 export function useFireLocations(){
     const [locations, setLocations] = useState([])
@@ -21,11 +21,13 @@ export function useFireLocations(){
 }
 
 export function addLocation(location, description, rating){
-    addDoc(collection(db, LOCATION_REF), {location, description, rating})
+    const subColRef = collection(db, USERS_REF, auth.currentUser.uid, LOCATION_REF)
+    addDoc(subColRef, {location, description, rating})
         .catch(error => console.log(error.message))
 }
 
 export function getLocations(location, description, rating){
-    getDocs(collection(db, LOCATION_REF), {location, description, rating})
+    const subColRef = collection(db, USERS_REF, auth.currentUser.uid, LOCATION_REF)
+    getDocs(subColRef, {location, description, rating})
         .catch(error => console.log(error.message))
 }

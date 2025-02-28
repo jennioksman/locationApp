@@ -1,22 +1,37 @@
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { auth } from "./firebaseConfig";
+import { auth, LOCATION_REF, USERS_REF } from "./firebaseConfig";
+import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 
 export function useFireAuth(){
     const [user, setUser] = useState()
+    const [locations, setLocations] = useState([])
 
     useEffect(()=> {
-        onAuthStateChanged(auth, user => setUser(user))
+        onAuthStateChanged(auth, user => {
+            setUser(user)
+            if(user){
+                const subColRef = collection(db, USERS_REF, user.uid, LOCATION_REF)
+                onSnapshot(subColRef, querySnapshot => {
+                    setLocations(querySnapshot.docs.map(doc => {
+                        return {id: doc.id, ...doc.data()}              
+                    }))
+                })
+            }
+        })
     }, [])
 
-    return user
+    return [user, locations]
 }
 
 export async function loginUser(email, password){
     
     try {
-        await signInWithEmailAndPassword(auth, email, password)   
+        const userCreds = await signInWithEmailAndPassword(auth, email, password)  
+        setDoc(doc(db, USERS_REF, userCreds.user.uid), {
+            email
+        }) 
     } catch (error) {
         return error.message
     }

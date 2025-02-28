@@ -3,6 +3,7 @@ import { Button, TextInput } from "react-native-paper"
 import { styles } from "../styles/Styles"
 import { loginUser, useFireAuth } from "../firebase/FirebaseAuthController"
 import { useState } from "react"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 
 export function Login() {
@@ -21,7 +22,7 @@ export function Login() {
     }
 
     return (
-        <View>
+        <SafeAreaView>
             <TextInput
                 mode='flat'
                 label='Email'
@@ -40,6 +41,6 @@ export function Login() {
                 mode="contained"
                 onPress={singInAction}
                 >Login</Button>
-        </View>
+        </SafeAreaView>
     )
 }
