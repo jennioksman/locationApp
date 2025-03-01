@@ -12,41 +12,45 @@ export function Login() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState()
 
-    async function singInAction(){
+    async function singInAction() {
         setError(await loginUser(email, password))
     }
 
-    if(error){
+    if (error) {
         Alert.alert(error)
         setError(null)
     }
 
     return (
-        <SafeAreaView style={styles.loginContainer}>
+        <SafeAreaView style={styles.loginPage} >
             <Image style={styles.headerImage} source={require('../assets/buildings.jpg')}/>
             <View>
                 <Text style={styles.headline} variant="headlineSmall">Wellcome to My Traveller</Text>
                 <Text style={styles.subHeadline} variant="bodyLarge">Login to add new locations and see your locations and reviews.</Text>
             </View>
-            <Text variant="headlineSmall">Login</Text>
-            <TextInput
-                mode='flat'
-                label='Email'
-                value={email}
-                onChangeText={setEmail}
-                left={<TextInput.Icon icon={'email'}/>}
-            />
-            <TextInput
-                mode='flat'
-                label='password'
-                value={password}
-                onChangeText={setPassword}
-                left={<TextInput.Icon icon={'lock'}/>}
-            />
-            <Button
-                mode="contained"
-                onPress={singInAction}
+            <View style={styles.loginContainer}>
+                <Text variant="headlineSmall">Login</Text>
+                <TextInput
+                    mode='flat'
+                    label='Email'
+                    value={email}
+                    onChangeText={setEmail}
+                    left={<TextInput.Icon icon={'email'} />}
+                />
+                <TextInput
+                    mode='flat'
+                    type='password'
+                    label='password'
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry={true}
+                    left={<TextInput.Icon icon={'lock'} />}
+                />
+                <Button
+                    mode="contained"
+                    onPress={singInAction}
                 >Login</Button>
+            </View>
         </SafeAreaView>
     )
 }

@@ -3,10 +3,16 @@ import { Dimensions } from "react-native"
 import { MD3LightTheme } from "react-native-paper"
 
 export const styles = StyleSheet.create({
+    background: {
+        backgroundColor: '#e1e9d3'
+    },
     container: {
         flex: 1,
         marginHorizontal: 10,
         gap: 10
+    },
+    loginPage: {
+        flex: 1,
     },
     loginContainer: {
         flex: 1,
@@ -20,8 +26,7 @@ export const styles = StyleSheet.create({
     },
     headerImage: {
         height: 150,
-        width: Dimensions.get('window').width -20,
-        marginRight: 10
+        width: Dimensions.get('window').width   
     },
     headline: {
         justifyContent: 'center',
@@ -62,8 +67,14 @@ export const styles = StyleSheet.create({
     countryView: {
         flexDirection: 'row',
         gap: 10
-    }
-    
+    },
+    modal: {
+        height: 100,
+        marginHorizontal: 40,
+        padding: 20,
+        alignItems: 'center',
+        backgroundColor: '#e8e5e8'
+      }
 })
 
 export const Theme = {
@@ -111,16 +122,5 @@ export const Theme = {
       surfaceDisabled: "rgba(26, 28, 24, 0.12)",
       onSurfaceDisabled: "rgba(26, 28, 24, 0.38)",
       backdrop: "rgba(45, 50, 40, 0.4)"
-    },
-    fonts: {
-      ...MD3LightTheme.fonts,
-      headlineMedium: {
-        ...MD3LightTheme.fonts.headlineMedium,
-        fontFamily: 'monospace'
-      },
-      bobyLarge: {
-        ...MD3LightTheme.fonts.bodyLarge,
-        fontFamily: 'monospace'
-      }
     }
   }
