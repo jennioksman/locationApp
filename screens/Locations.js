@@ -18,7 +18,7 @@ export function Locations() {
 
     return (
             <View style={styles.container}>
-                <Text style={styles.headline} variant='headlineMedium'>Your Locations</Text>
+                <Text style={styles.headline} variant='headlineMedium'>My Locations</Text>
                 <Button
                     mode="contained"
                     onPress={() => navigation.navigate('Adding Location')}

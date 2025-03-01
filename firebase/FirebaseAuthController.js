@@ -25,6 +25,7 @@ export function useFireAuth(){
     return [user, locations]
 }
 
+
 export async function loginUser(email, password){
     
     try {

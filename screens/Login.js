@@ -1,9 +1,10 @@
 import { Alert, View, Image } from "react-native"
 import { Button, TextInput, Text } from "react-native-paper"
 import { styles } from "../styles/Styles"
-import { loginUser, useFireAuth } from "../firebase/FirebaseAuthController"
+import { loginUser } from "../firebase/FirebaseAuthController"
 import { useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
+
 
 
 export function Login() {
