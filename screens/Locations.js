@@ -6,7 +6,7 @@ import { Rating } from 'react-native-ratings'
 import { LocationContext } from '../contexts/context'
 import { useNavigation } from '@react-navigation/native'
 import { useFireLocations } from '../firebase/FirebaseController'
-import { styles } from "../styles/Styles"
+import { styles, Theme } from "../styles/Styles"
 import { UserLocationContext } from '../contexts/UserLocationsContext'
 
 export function Locations() {
@@ -18,28 +18,38 @@ export function Locations() {
     const locations = useContext(UserLocationContext)
 
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.headline} variant='headlineMedium'>Your Locations</Text>
             <ScrollView>
                 {locations.map((item, index) => (
-                    <View key={index}>
-                        <Text variant="bodyLarge">{`Location: ${item.location}`}</Text>
-                        <Text variant="bodyLarge">{`Description: ${item.description}`}</Text>
-                        <IconButton
-                            icon="map-marker"
-                            size={40}
-                            onPress={() => {
-                                setLocation(item.location)  
-                                navigation.navigate('Map')  
-                            }}
-                        />
+                    <View style={[styles.item,{backgroundColor: Theme.colors.elevation.level3}]} key={index}>
+                        
+                        <View style={styles.itemView}>
+
+                            <View >
+                                <Text variant="headlineSmall">{item.location}</Text>
+                                <Text variant="bodyLarge">{item.description}</Text>
+                            </View>
+                            <IconButton
+                                style={styles.mapIcon}
+                                icon="map-marker"
+                                size={40}
+                                onPress={() => {
+                                    setLocation(item.location)  
+                                    navigation.navigate('Map')  
+                                }}
+                            />
+                        </View>
                         <Rating
                             type='custom'
+                            ratingColor={Theme.colors.primary}
+                            tintColor={Theme.colors.elevation.level3}
                             ratingCount={5}
                             startingValue={item.rating}
                             readonly
                             starContainerStyle={{
                                 alignSelf: "center",
-                                backgroundColor: "green",
+                                backgroundColor: '#e7edda'
                             }}
                         />
                     </View>

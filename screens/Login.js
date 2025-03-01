@@ -1,5 +1,5 @@
-import { Alert, View } from "react-native"
-import { Button, TextInput } from "react-native-paper"
+import { Alert, View, Image } from "react-native"
+import { Button, TextInput, Text } from "react-native-paper"
 import { styles } from "../styles/Styles"
 import { loginUser, useFireAuth } from "../firebase/FirebaseAuthController"
 import { useState } from "react"
@@ -22,7 +22,11 @@ export function Login() {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.loginContainer}>
+            <Image style={styles.headerImage} source={require('../assets/buildings.jpg')}/>
+            <Text style={styles.headline} variant="headlineSmall">Wellcome to My Traveller</Text>
+            <Text style={styles.headline} variant="bodyLarge">Login to see your locations and reviews</Text>
+            <Text variant="headlineSmall">Login</Text>
             <TextInput
                 mode='flat'
                 label='Email'

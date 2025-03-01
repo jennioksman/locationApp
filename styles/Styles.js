@@ -5,8 +5,13 @@ import { MD3LightTheme } from "react-native-paper"
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        margin: 10
+        marginHorizontal: 10,
+        gap: 10
+    },
+    loginContainer: {
+        flex: 1,
+        margin: 10,
+        gap: 10
     },
     map: {
         width: Dimensions.get('window').width,
@@ -16,8 +21,30 @@ export const styles = StyleSheet.create({
         marginBottom: 100
     },
     headerImage: {
-        height: 200
-    }
+        height: 150,
+        width: Dimensions.get('window').width -20,
+        marginRight: 10
+    },
+    headline: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginVertical: 20
+    },
+    itemView: {
+        flexDirection: 'row',
+        gap: 10
+    },
+    item: {
+        marginVertical: 10,
+        padding: 10,
+        borderWidth: 2,
+        borderRadius: 3
+    },
+    mapIcon: {
+        flex: 1,
+        alignItems: 'flex-end'
+    },
+    
 })
 
 export const Theme = {
