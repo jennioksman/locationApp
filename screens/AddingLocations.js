@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
-import { DataContext, LocationContext } from '../contexts/context'
+import { DataContext } from '../contexts/dataContext'
+import { LocationContext } from '../contexts/locationContext'
 import { addLocation, useFireLocations } from '../firebase/FirebaseController'
 import { styles, Theme } from "../styles/Styles"
 

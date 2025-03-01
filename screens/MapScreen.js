@@ -1,10 +1,9 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useContext, useEffect } from 'react'
-import { SafeAreaView, StyleSheet, View } from 'react-native'
-import { Button, Text, TextInput, IconButton } from 'react-native-paper'
+import { SafeAreaView } from 'react-native'
 import MapView from 'react-native-maps'
 import * as Location from 'expo-location'
-import { LocationContext } from '../contexts/context'
+import { LocationContext } from '../contexts/locationContext'
 import { styles } from "../styles/Styles"
 
 
