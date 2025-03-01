@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useContext, useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { Button, Text, TextInput, IconButton } from 'react-native-paper'
 import MapView from 'react-native-maps'
 import * as Location from 'expo-location'
@@ -26,16 +26,13 @@ export function MapScreen() {
             }
             const place = await Location.geocodeAsync(location)
             setLatitude(place[0].latitude)
-            setLongnitude(place[0].longitude)
-            console.log(latitude, longnitude);    
+            setLongnitude(place[0].longitude)    
         }
         getLocation()
     }, [location]
     )
     return (
-        <View style={styles.container}>
-            <Text variant='headlineSmall'>{latitude}</Text>
-            <Text variant='headlineSmall'>{longnitude}</Text>
+        <SafeAreaView style={styles.container}>
             <MapView
                 style={styles.map}
                 initialRegion={{
@@ -51,7 +48,8 @@ export function MapScreen() {
                     longitudeDelta: 0.0421
                 }}
             />
-        </View>
+        </SafeAreaView>
+
     )
 }
 

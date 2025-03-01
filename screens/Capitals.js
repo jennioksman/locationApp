@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { SafeAreaView, ScrollView, View, Image } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
-import { styles } from "../styles/Styles"
+import { styles, Theme } from "../styles/Styles"
 
 
 export function Capitals() {
@@ -37,10 +37,11 @@ export function Capitals() {
             .catch(error => console.log(error.message))
     }
     return (
-        <SafeAreaView style={styles.scroll}>
+        <SafeAreaView style={[styles.scroll, styles.container]}>
+            <Text style={styles.headline} variant="headlineSmall">Serch Country by name</Text>
             <TextInput
                 mode='flat'
-                label='Search'
+                label='Country'
                 value={country}
                 onChangeText={setCountry}
             />
@@ -50,11 +51,14 @@ export function Capitals() {
                 >Search</Button>
             <ScrollView>
                 {data.map((item, index) => (
-                    <View key={index}>
-                        <Text variant="bodyLarge">{`Country: ${item.countryName}`}</Text>
-                        <Text variant="bodyLarge">{`Capital: ${item.capital}`}</Text>
-                        <Image source={{ uri: item.flag }} style={{ width: 100, height: 60 }} />
-                    </View>))}
+                    <View style={[styles.item, styles.countryView, {backgroundColor: Theme.colors.elevation.level3}]} key={index}>
+                        <View style={styles.itemText} key={index}>
+                            <Text variant="bodyLarge">{`Country: ${item.countryName}`}</Text>
+                            <Text variant="bodyLarge">{`Capital: ${item.capital}`}</Text>
+                        </View>
+                        <Image style={styles.image} source={{ uri: item.flag }} />
+                    </View>
+                ))}
             </ScrollView>
         </SafeAreaView>
     )

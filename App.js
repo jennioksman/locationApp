@@ -57,22 +57,22 @@ function Navigation() {
         name={LOCATIONS}
         component={Locations}
         options={{ 
-          tabBarIcon: () => <Icon source={'map-marker'} size={20} /> }}
+          tabBarIcon: () => <Icon source={'map-marker'} size={20} color={Theme.colors.inverseSurface}/> }}
       />
       <Tab.Screen
         name={ADDING}
         component={AddingLocation}
-        options={{ tabBarIcon: () => <Icon source={'plus-circle'} size={20} /> }}
+        options={{ tabBarIcon: () => <Icon source={'plus-circle'} size={20} color={Theme.colors.inverseSurface}/> }}
       />
       <Tab.Screen
         name={MAP}
         component={MapScreen}
-        options={{ tabBarIcon: () => <Icon source={'map'} size={20} /> }}
+        options={{ tabBarIcon: () => <Icon source={'map'} size={20} color={Theme.colors.inverseSurface}/> }}
       />
       <Tab.Screen
         name={CAPITALS}
         component={Capitals}
-        options={{ tabBarIcon: () => <Icon source={'city-variant'} size={20} /> }}
+        options={{ tabBarIcon: () => <Icon source={'city-variant'} size={20} color={Theme.colors.inverseSurface} /> }}
       />
     </Tab.Navigator>
 

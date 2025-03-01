@@ -23,14 +23,13 @@ export function Locations() {
             <ScrollView>
                 {locations.map((item, index) => (
                     <View style={[styles.item,{backgroundColor: Theme.colors.elevation.level3}]} key={index}>
-                        
                         <View style={styles.itemView}>
-
                             <View >
                                 <Text variant="headlineSmall">{item.location}</Text>
                                 <Text variant="bodyLarge">{item.description}</Text>
                             </View>
                             <IconButton
+                                iconColor={Theme.colors.secondary}
                                 style={styles.mapIcon}
                                 icon="map-marker"
                                 size={40}

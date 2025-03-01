@@ -24,8 +24,10 @@ export function Login() {
     return (
         <SafeAreaView style={styles.loginContainer}>
             <Image style={styles.headerImage} source={require('../assets/buildings.jpg')}/>
-            <Text style={styles.headline} variant="headlineSmall">Wellcome to My Traveller</Text>
-            <Text style={styles.headline} variant="bodyLarge">Login to see your locations and reviews</Text>
+            <View>
+                <Text style={styles.headline} variant="headlineSmall">Wellcome to My Traveller</Text>
+                <Text style={styles.subHeadline} variant="bodyLarge">Login to add new locations and see your locations and reviews.</Text>
+            </View>
             <Text variant="headlineSmall">Login</Text>
             <TextInput
                 mode='flat'

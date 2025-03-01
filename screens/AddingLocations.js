@@ -5,7 +5,7 @@ import { Button, Text, TextInput } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
 import { DataContext, LocationContext } from '../contexts/context'
 import { addLocation, useFireLocations } from '../firebase/FirebaseController'
-import { styles } from "../styles/Styles"
+import { styles, Theme } from "../styles/Styles"
 
 export function AddingLocation() {
 
@@ -27,7 +27,8 @@ export function AddingLocation() {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.headline} variant='headlineMedium'>Add New Location</Text>
             <TextInput
                 mode='flat'
                 label='Location'
@@ -42,13 +43,13 @@ export function AddingLocation() {
             />
             <Rating
                 type='custom'
+                ratingColor={Theme.colors.primary}
+                tintColor={Theme.colors.elevation.level3}
+                imageSize={55}
                 ratingCount={5}
                 startingValue={rating}
                 onFinishRating={setRating}
-                starContainerStyle={{
-                    alignSelf: "center",
-                    backgroundColor: "green",
-                }}
+                ratingContainerStyle={styles.rating}
             />
             <Button
                 mode="contained"

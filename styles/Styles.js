@@ -14,11 +14,9 @@ export const styles = StyleSheet.create({
         gap: 10
     },
     map: {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height
-    },
-    scroll: {
-        marginBottom: 100
+        width: Dimensions.get('window').width - 20,
+        height: Dimensions.get('window').height - 20,
+        marginVertical: 10
     },
     headerImage: {
         height: 150,
@@ -30,6 +28,11 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: 20
     },
+    subHeadline: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginBottom: 20
+    },
     itemView: {
         flexDirection: 'row',
         gap: 10
@@ -37,13 +40,29 @@ export const styles = StyleSheet.create({
     item: {
         marginVertical: 10,
         padding: 10,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 3
+    },
+    itemText: {
+        flex: 2
     },
     mapIcon: {
         flex: 1,
         alignItems: 'flex-end'
     },
+    rating: {
+        alignItems: 'space-between'
+    },
+    image: {
+        width: 100, 
+        height: 60,
+        flex: 1,
+        alignItems: 'flex-end'
+    },
+    countryView: {
+        flexDirection: 'row',
+        gap: 10
+    }
     
 })
 
