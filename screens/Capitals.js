@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { SafeAreaView, ScrollView, View, Image } from "react-native"
-import { Button, Modal, Portal, Searchbar, Text, TextInput } from "react-native-paper"
+import { Button, Modal, Portal, Searchbar, Text } from "react-native-paper"
 import { styles, Theme } from "../styles/Styles"
 
 
@@ -50,7 +50,6 @@ export function Capitals() {
             .catch(error =>{ 
                 setAlert(error.message)
                 setVisible(true)
-                console.log(error.message)   
             })
     }
     return (

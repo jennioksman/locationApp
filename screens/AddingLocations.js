@@ -55,7 +55,6 @@ export function AddingLocation() {
             <Button
                 mode="contained"
                 onPress={() => {
-                    console.log(locations)
                     addToList()
                     addLocation(location, description, rating)
                     setLocation('')
